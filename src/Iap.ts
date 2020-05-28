@@ -23,34 +23,36 @@ export default class Iap {
     this.projectToken = projectToken;
 
     // If we're in a frame, register listeners for async callbacks
-    if (window && window.parent) {
-      window.addEventListener('message', ({ data }) => {
-        const { event } = data;
-        if (event === 'KojiIap.TokenCreated') {
-          try {
-            this.userToken = data.token;
-            this.tokenCallbacks.forEach((callback) => {
-              callback(data.userToken);
-            });
-            this.tokenCallbacks = [];
-          } catch (err) {
-            console.log(err);
+    try {
+      if (window && window.parent) {
+        window.addEventListener('message', ({ data }) => {
+          const { event } = data;
+          if (event === 'KojiIap.TokenCreated') {
+            try {
+              this.userToken = data.token;
+              this.tokenCallbacks.forEach((callback) => {
+                callback(data.userToken);
+              });
+              this.tokenCallbacks = [];
+            } catch (err) {
+              console.log(err);
+            }
           }
-        }
 
-        if (event === 'KojiIap.PurchaseFinished') {
-          try {
-            this.userToken = data.userToken;
-            this.purchaseCallbacks.forEach((callback) => {
-              callback(data.success, data.userToken);
-            });
-            this.purchaseCallbacks = [];
-          } catch (err) {
-            console.log(err);
+          if (event === 'KojiIap.PurchaseFinished') {
+            try {
+              this.userToken = data.userToken;
+              this.purchaseCallbacks.forEach((callback) => {
+                callback(data.success, data.userToken);
+              });
+              this.purchaseCallbacks = [];
+            } catch (err) {
+              console.log(err);
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    } catch (err) {}
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -67,11 +69,13 @@ export default class Iap {
 
     this.tokenCallbacks.push(callback);
 
-    if (window && window.parent) {
-      window.parent.postMessage({
-        _kojiEventName: '@@koji/iap/getToken',
-      }, '*');
-    }
+    try {
+      if (window && window.parent) {
+        window.parent.postMessage({
+          _kojiEventName: '@@koji/iap/getToken',
+        }, '*');
+      }
+    } catch {}
     return '';
   }
 
@@ -82,12 +86,14 @@ export default class Iap {
   ) {
     this.purchaseCallbacks.push(callback);
 
-    if (window && window.parent) {
-      window.parent.postMessage({
-        _kojiEventName: '@@koji/iap/promptPurchase',
-        sku,
-      }, '*');
-    }
+    try {
+      if (window && window.parent) {
+        window.parent.postMessage({
+          _kojiEventName: '@@koji/iap/promptPurchase',
+          sku,
+        }, '*');
+      }
+    } catch {}
   }
 
   //////////////////////////////////////////////////////////////////////////////
