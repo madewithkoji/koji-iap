@@ -10,17 +10,17 @@ export interface IapReceipt {
 }
 
 export default class Iap {
-  private readonly appId?: string;
-  private readonly appToken?: string;
+  private readonly projectId?: string;
+  private readonly projectToken?: string;
 
   private userToken?: string;
 
   private tokenCallbacks: ((userToken: UserToken) => void)[] = [];
   private purchaseCallbacks: ((success: boolean, userToken: UserToken) => void)[] = [];
 
-  constructor(appId?: string, appToken?: string) {
-    this.appId = appId;
-    this.appToken = appToken;
+  constructor(projectId?: string, projectToken?: string) {
+    this.projectId = projectId;
+    this.projectToken = projectToken;
 
     // If we're in a frame, register listeners for async callbacks
     if (window && window.parent) {
@@ -130,8 +130,8 @@ export default class Iap {
   private getHeaders(userToken?: UserToken): Headers {
     const headers: Headers = {
       'Content-Type': 'application/json',
-      'X-Koji-App-Id': this.appId,
-      'X-Koji-App-Token': this.appToken,
+      'X-Koji-Project-Id': this.projectId,
+      'X-Koji-Project-Token': this.projectToken,
     };
 
     if (userToken) {
