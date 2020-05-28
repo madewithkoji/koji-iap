@@ -10,7 +10,7 @@ export interface IapReceipt {
 }
 
 export default class Iap {
-  private readonly appId: string;
+  private readonly appId?: string;
   private readonly appToken?: string;
 
   private userToken?: string;
@@ -18,7 +18,7 @@ export default class Iap {
   private tokenCallbacks: ((userToken: UserToken) => void)[] = [];
   private purchaseCallbacks: ((success: boolean, userToken: UserToken) => void)[] = [];
 
-  constructor(appId: string, appToken?: string) {
+  constructor(appId?: string, appToken?: string) {
     this.appId = appId;
     this.appToken = appToken;
 
@@ -40,11 +40,9 @@ export default class Iap {
 
         if (event === 'KojiIap.PurchaseFinished') {
           try {
+            this.userToken = data.userToken;
             this.purchaseCallbacks.forEach((callback) => {
-              if (!this.userToken) {
-                return;
-              }
-              callback(data.success, this.userToken);
+              callback(data.success, data.userToken);
             });
             this.purchaseCallbacks = [];
           } catch (err) {
@@ -69,7 +67,7 @@ export default class Iap {
 
     this.tokenCallbacks.push(callback);
 
-    if (window.parent) {
+    if (window && window.parent) {
       window.parent.postMessage({
         _kojiEventName: '@@koji/iap/getToken',
       }, '*');
@@ -84,7 +82,7 @@ export default class Iap {
   ) {
     this.purchaseCallbacks.push(callback);
 
-    if (window.parent) {
+    if (window && window.parent) {
       window.parent.postMessage({
         _kojiEventName: '@@koji/iap/promptPurchase',
         sku,
