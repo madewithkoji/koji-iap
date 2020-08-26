@@ -5,6 +5,7 @@ export type UserToken = string;
 export interface IapReceipt {
   receiptId: string;
   productId: string;
+  purchasedPrice: number;
   attributes: {[index: string]: any};
   datePurchased: Date;
 }
@@ -91,6 +92,26 @@ export default class Iap {
         window.parent.postMessage({
           _kojiEventName: '@@koji/iap/promptPurchase',
           sku,
+        }, '*');
+      }
+    } catch {}
+  }
+
+  // Ask the user to make a purchase with a dynamic price (pay what you want)
+  // `priceInfo` is an object like `{ price: number }`
+  public promptPurchaseWithPrice(
+    sku: string,
+    priceInfo: {[index: string]: any},
+    callback: (success: boolean, userToken: UserToken) => void,
+  ) {
+    this.purchaseCallbacks.push(callback);
+
+    try {
+      if (window && window.parent) {
+        window.parent.postMessage({
+          _kojiEventName: '@@koji/iap/promptPurchase',
+          sku,
+          priceInfo,
         }, '*');
       }
     } catch {}
