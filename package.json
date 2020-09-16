@@ -1,11 +1,11 @@
 {
   "name": "@withkoji/iap",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "In-app purchase infrastructure for Koji templates",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:madewithkoji/koji-iap-sdk.git"
+    "url": "git+ssh://git@github.com:madewithkoji/koji-iap.git"
   },
   "author": "GoMeta",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "typescript": "^3.1.6"
   },
   "bugs": {
-    "url": "https://github.com/madewithkoji/koji-iap-sdk/issues"
+    "url": "https://github.com/madewithkoji/koji-iap/issues"
   },
-  "homepage": "https://github.com/madewithkoji/koji-iap-sdk#readme"
+  "homepage": "https://github.com/madewithkoji/koji-iap#readme"
 }
