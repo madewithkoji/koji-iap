@@ -98,7 +98,7 @@ export default class Iap {
         window.parent.postMessage({
           _kojiEventName: '@@koji/iap/promptPurchase',
           sku,
-          ...purchaseOptions,
+          purchaseOptions,
         }, '*');
       }
     } catch {}
