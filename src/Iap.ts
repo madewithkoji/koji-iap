@@ -12,7 +12,7 @@ export interface IapReceipt {
 
 export interface PurchaseOptions {
   price?: number;
-  customMemo?: string;
+  customMessage?: string;
 }
 
 export default class Iap {
@@ -89,7 +89,7 @@ export default class Iap {
   public startPurchase(
     sku: string,
     callback: (success: boolean, userToken: UserToken) => void,
-    purchaseOptions: {[index: string]: any} = {},
+    purchaseOptions: PurchaseOptions = {},
   ) {
     this.purchaseCallbacks.push(callback);
 
