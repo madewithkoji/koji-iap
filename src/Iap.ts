@@ -10,6 +10,11 @@ export interface IapReceipt {
   datePurchased: Date;
 }
 
+export interface PurchaseOptions {
+  price?: number;
+  customMemo?: string;
+}
+
 export default class Iap {
   private readonly projectId?: string;
   private readonly projectToken?: string;
@@ -81,6 +86,26 @@ export default class Iap {
   }
 
   // Ask Koji to prompt the user to make a purchase
+  public startPurchase(
+    sku: string,
+    callback: (success: boolean, userToken: UserToken) => void,
+    purchaseOptions: {[index: string]: any} = {},
+  ) {
+    this.purchaseCallbacks.push(callback);
+
+    try {
+      if (window && window.parent) {
+        window.parent.postMessage({
+          _kojiEventName: '@@koji/iap/promptPurchase',
+          sku,
+          ...purchaseOptions,
+        }, '*');
+      }
+    } catch {}
+  }
+
+  // @deprecated
+  // Ask Koji to prompt the user to make a purchase
   public promptPurchase(
     sku: string,
     callback: (success: boolean, userToken: UserToken) => void,
@@ -97,6 +122,7 @@ export default class Iap {
     } catch {}
   }
 
+  // @deprecated
   // Ask the user to make a purchase with a dynamic price (pay what you want)
   // `priceInfo` is an object like `{ price: number }`
   public promptPurchaseWithPrice(
@@ -154,6 +180,31 @@ export default class Iap {
     }
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Shared methods
+  //////////////////////////////////////////////////////////////////////////////
+  public async loadProduct(sku: string) {
+    try {
+      const request = await fetch(
+        this.buildUri(
+          '/v1/iap/provider/getProductBySku',
+          { appId: this.projectId, sku },
+        ),
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      const product = await request.json();
+      return product;
+    } catch (err) {
+      return null;
+    }
+  }
+
   private getHeaders(userToken?: UserToken): Headers {
     const headers: Headers = {
       'Content-Type': 'application/json',
@@ -167,10 +218,20 @@ export default class Iap {
     return headers;
   }
 
-  private buildUri(path: string): string {
+  private buildUri(path: string, queryParams: {[index: string]: any} = {}): string {
+    let base: string = `https://rest.api.gokoji.com${path}`;
+
     if (process.env.NODE_TEST) {
-      return `http://localhost:3129${path}`;
+      base = `http://localhost:3129${path}`;
     }
-    return `https://rest.api.gokoji.com${path}`;
+
+    const resolvedParams = Object.keys(queryParams)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryParams[key])}`)
+      .join('&');
+    if (resolvedParams) {
+      base = `${base}?${resolvedParams}`;
+    }
+
+    return base;
   }
 }
