@@ -162,6 +162,25 @@ export default class Iap {
     }
   }
 
+  public async resolveReceiptById(receiptId: string): Promise<IapReceipt|null> {
+    try {
+      const request = await fetch(
+        this.buildUri('/v1/iap/consumer/resolveReceiptById'),
+        {
+          method: 'POST',
+          headers: this.getHeaders(),
+          body: JSON.stringify({
+            receiptId,
+          }),
+        },
+      );
+      const { receipt } = await request.json();
+      return receipt;
+    } catch (err) {
+      return null;
+    }
+  }
+
   public async updateReceipt(receiptId: string, attributes: {[index: string]: any}): Promise<any> {
     try {
       await fetch(
