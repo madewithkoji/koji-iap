@@ -29,8 +29,8 @@ Instantiate `Iap` on the backend.
 ```
 import Iap from '@withkoji/iap';
 const iap = new Iap(
-  process.env.KOJI_PROJECT_ID,
-  process.env.KOJI_PROJECT_TOKEN,
+  res.locals.KOJI_PROJECT_ID,
+  res.locals.KOJI_PROJECT_TOKEN,
 );
 ```
 
