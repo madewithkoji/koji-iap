@@ -22,7 +22,7 @@ export default class Iap {
   private userToken?: string;
 
   private tokenCallbacks: ((userToken: UserToken) => void)[] = [];
-  private purchaseCallbacks: ((success: boolean, userToken: UserToken) => void)[] = [];
+  private purchaseCallbacks: ((success: boolean, userToken: UserToken, receiptId?: string) => void)[] = [];
 
   constructor(projectId?: string, projectToken?: string) {
     this.projectId = projectId;
@@ -49,7 +49,7 @@ export default class Iap {
             try {
               this.userToken = data.userToken;
               this.purchaseCallbacks.forEach((callback) => {
-                callback(data.success, data.userToken);
+                callback(data.success, data.userToken, data.receiptId);
               });
               this.purchaseCallbacks = [];
             } catch (err) {
@@ -88,7 +88,7 @@ export default class Iap {
   // Ask Koji to prompt the user to make a purchase
   public startPurchase(
     sku: string,
-    callback: (success: boolean, userToken: UserToken) => void,
+    callback: (success: boolean, userToken: UserToken, receiptId?: string) => void,
     purchaseOptions: PurchaseOptions = {},
   ) {
     this.purchaseCallbacks.push(callback);
