@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:madewithkoji/koji-iap-sdk.git"
+    "url": "git+ssh://git@github.com:madewithkoji/koji-iap.git"
   },
   "author": "GoMeta",
   "license": "MIT",
