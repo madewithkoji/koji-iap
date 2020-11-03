@@ -7,6 +7,10 @@ export interface IapReceipt {
   productId: string;
   purchasedPrice: number;
   attributes: {[index: string]: any};
+  transactionIds: {
+    credit: string;
+    debit: string;
+  };
   datePurchased: Date;
 }
 

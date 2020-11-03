@@ -1,6 +1,6 @@
 {
   "name": "@withkoji/iap",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "In-app purchase infrastructure for Koji templates",
   "main": "./dist/index.js",
   "repository": {
