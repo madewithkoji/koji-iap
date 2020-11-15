@@ -1,4 +1,5 @@
 # Koji IAP
+![npm (scoped)](https://img.shields.io/npm/v/@withkoji/iap?color=green&style=flat-square)
 
 **In-app purchase infrastructure for Koji templates.**
 
