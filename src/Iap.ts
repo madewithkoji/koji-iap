@@ -185,7 +185,16 @@ export default class Iap {
     }
   }
 
-  public async updateReceipt(receiptId: string, attributes: {[index: string]: any}): Promise<any> {
+  // Update the attributes on a receipt to handle things like fulfillment or
+  // tracking. `notificationMessage` is an optional parameter to customize
+  // the message that is sent to the user - limited to 80 characters, as it
+  // may be delivered via SMS. If left undefined, the message will read:
+  // "Your receipt for PRODUCT_NAME was updated"
+  public async updateReceipt(
+    receiptId: string,
+    attributes: {[index: string]: any},
+    notificationMessage?: string,
+  ): Promise<any> {
     try {
       await fetch(
         this.buildUri('/v1/iap/consumer/updateReceiptAttributes'),
@@ -195,6 +204,7 @@ export default class Iap {
           body: JSON.stringify({
             receiptId,
             attributes,
+            notificationMessage,
           }),
         },
       );
