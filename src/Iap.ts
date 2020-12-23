@@ -185,6 +185,25 @@ export default class Iap {
     }
   }
 
+  public async resolveReceiptsBySku(sku: string): Promise<IapReceipt[]> {
+    try {
+      const request = await fetch(
+        this.buildUri('/v1/iap/consumer/resolveReceiptsBySku'),
+        {
+          method: 'POST',
+          headers: this.getHeaders(),
+          body: JSON.stringify({
+            sku,
+          }),
+        },
+      );
+      const { receipts } = await request.json();
+      return receipts;
+    } catch (err) {
+      return [];
+    }
+  }
+
   // Update the attributes on a receipt to handle things like fulfillment or
   // tracking. `notificationMessage` is an optional parameter to customize
   // the message that is sent to the user - limited to 80 characters, as it
