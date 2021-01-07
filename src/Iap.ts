@@ -15,7 +15,7 @@ export interface IapReceipt {
 }
 
 export interface PurchaseOptions {
-  price?: number;
+  amount?: number;
   customMessage?: string;
 }
 
@@ -128,7 +128,7 @@ export default class Iap {
 
   // @deprecated
   // Ask the user to make a purchase with a dynamic price (pay what you want)
-  // `priceInfo` is an object like `{ price: number }`
+  // `priceInfo` is an object like `{ amount: number }`
   public promptPurchaseWithPrice(
     sku: string,
     priceInfo: {[index: string]: any},
