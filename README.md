@@ -5,6 +5,9 @@
 
 ## Overview
 
+**[DEPRECATED]**
+This package is deprecated and is included only for backwards compatibility. For new templates, use [@withkoji/core](https://developer.withkoji.com/reference/packages/withkoji-koji-core).
+
 The @withkoji/koji-iap package enables you to implement in-app purchases from your Koji templates. For example, require a purchase to unlock a premium asset or a game. This package provides frontend methods, for managing transactions with users, and backend methods, for validating purchases against receipts.
 
 ## Installation
@@ -45,4 +48,4 @@ const iap = new Iap(
 
 See the [contributions page](https://developer.withkoji.com/docs/about/contribute-koji-developers) on the developer site for info on how to make contributions to Koji repositories and developer documentation.
 
-For any questions, reach out to the developer community or the `@Koji Team` on our [Discord server](https://discord.gg/eQuMJF6).
+For any questions, reach out to the developer community or the `@Koji Team` on our [Discord server](https://discord.com/invite/9egkTWf4ec).
