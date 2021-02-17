@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
+    "@types/request": "^2.48.5",
     "node-fetch": "^2.6.0",
     "request": "^2.88.2"
   },
