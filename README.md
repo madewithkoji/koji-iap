@@ -1,14 +1,15 @@
-# Koji IAP
+# Koji IAP (deprecated)
 ![npm (scoped)](https://img.shields.io/npm/v/@withkoji/iap?color=green&style=flat-square)
 
 **In-app purchase infrastructure for Koji templates.**
 
 ## Overview
 
-**[DEPRECATED]**
-This package is deprecated and is included only for backwards compatibility. For new templates, use [@withkoji/core](https://developer.withkoji.com/reference/packages/withkoji-koji-core).
-
 The @withkoji/koji-iap package enables you to implement in-app purchases from your Koji templates. For example, require a purchase to unlock a premium asset or a game. This package provides frontend methods, for managing transactions with users, and backend methods, for validating purchases against receipts.
+
+**[DEPRECATED]**
+This package is deprecated and is included only for backwards compatibility.
+For new templates, use [@withkoji/core](https://developer.withkoji.com/reference/core/withkoji-koji-core).
 
 ## Installation
 
@@ -18,7 +19,7 @@ Install the package in the frontend and backend services of your Koji project.
 npm install --save @withkoji/iap
 ```
 
-**NOTE:** To support instant remixes of your template, you must also install the [@withkoji/vcc package](https://developer.withkoji.com/reference/packages/withkoji-vcc-package) and implement the `VccMiddleware` on your backend server. This middleware maintains the process variables for instant remixes, ensuring that purchases are applied to the correct remix version.
+**NOTE:** To support instant remixes of your template, you must also install the [@withkoji/vcc package](https://developer.withkoji.com/reference/deprecated-packages/withkoji-vcc-package) and implement the `VccMiddleware` on your backend server. This middleware maintains the process variables for instant remixes, ensuring that purchases are applied to the correct remix version.
 
 ## Basic use
 
@@ -30,6 +31,7 @@ const iap = new Iap();
 ```
 
 Instantiate `Iap` on the backend.
+
 ```
 import Iap from '@withkoji/iap';
 const iap = new Iap(
@@ -40,8 +42,7 @@ const iap = new Iap(
 
 ## Related resources
 
-* [Package documentation](https://developer.withkoji.com/reference/packages/withkoji-koji-iap-package)
-* [Reference project](https://withkoji.com/templates/sean/aoyl/code)
+* [Package documentation](https://developer.withkoji.com/reference/deprecated-packages/withkoji-koji-iap-package)
 * [Koji homepage](http://withkoji.com/)
 
 ## Contributions and questions
